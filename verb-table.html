@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英语动词AAA型变形记忆表</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#64748B',
+                        accent: '#0EA5E9',
+                        neutral: '#F1F5F9',
+                        success: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .table-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+            }
+            .progress-bar {
+                height: 4px;
+                background: linear-gradient(90deg, #3B82F6 0%, #0EA5E9 100%);
+                transition: width 0.5s ease;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <header class="text-center mb-10">
+            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-gray-800 mb-3">英语动词AAA型变形记忆表</h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">掌握这些AAA型（原形=过去式=过去分词）动词，提升你的英语能力！根据艾宾浩斯记忆曲线设计，帮助你高效记忆。</p>
+            <div class="mt-6 flex justify-center space-x-4">
+                <button id="printBtn" class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg transition-all flex items-center">
+                    <i class="fa fa-print mr-2"></i> 打印记忆表
+                </button>
+                <button id="exportBtn" class="bg-white hover:bg-gray-50 text-primary border border-primary px-6 py-2 rounded-lg transition-all flex items-center">
+                    <i class="fa fa-download mr-2"></i> 导出为CSV
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="bg-white rounded-2xl table-shadow p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">今日学习进度</h2>
+                    <div class="text-sm text-gray-600">
+                        <span id="progress-text">0/1 组</span>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-2">
+                    <div id="progress-bar" class="progress-bar rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-6" id="vocabulary-cards">
+                <!-- 词汇卡片将通过JavaScript动态生成 -->
+            </div>
+
+            <div class="mt-10 bg-white rounded-2xl table-shadow p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">记忆小贴士</h2>
+                <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fa fa-lightbulb-o text-accent mt-1 mr-3"></i>
+                        <span>每天学习1组（8个）单词，根据艾宾浩斯记忆曲线，建议在学习后的10分钟、1小时、1天、3天、1周、2周、1个月和3个月后进行复习。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-check-circle text-success mt-1 mr-3"></i>
+                        <span>点击卡片可以标记是否已掌握，帮助你跟踪学习进度。</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa fa-repeat text-warning mt-1 mr-3"></i>
+                        <span>对于已掌握的单词，系统会自动减少复习频率；对于未掌握的单词，会增加复习频率。</span>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="mt-16 text-center text-gray-500 text-sm">
+            <p>© 2025 英语学习助手 | 根据艾宾浩斯记忆曲线优化</p>
+        </footer>
+    </div>
+
+    <script>
+        // 英语动词AAA型变形表数据 - 每天一组，每组8个单词
+        const vocabularyData = [
+            {
+                group: 1,
+                words: [
+                    { base: "cost", past: "cost", participle: "cost", meaning: "花费", example: "The book cost me $20." },
+                    { base: "cut", past: "cut", participle: "cut", meaning: "切割", example: "She cut the cake into pieces." },
+                    { base: "hit", past: "hit", participle: "hit", meaning: "击打", example: "He hit the ball hard." },
+                    { base: "hurt", past: "hurt", participle: "hurt", meaning: "伤害", example: "I hurt my foot when I fell." },
+                    { base: "let", past: "let", participle: "let", meaning: "让", example: "My parents let me go out." },
+                    { base: "put", past: "put", participle: "put", meaning: "放置", example: "Please put the book on the table." },
+                    { base: "read", past: "read", participle: "read", meaning: "阅读", example: "I read a book yesterday." },
+                    { base: "set", past: "set", participle: "set", meaning: "设置", example: "She set the alarm for 6 am." }
+                ],
+                mastered: false
+            }
+        ];
+
+        // 获取当前日期，确定应该学习哪一组单词
+        function getTodaysGroup() {
+            const today = new Date();
+            // 使用日期的模运算来确定学习哪一组（这里简化为每天学习第一组）
+            return 1;
+        }
+
+        // 渲染词汇卡片
+        function renderVocabularyCards() {
+            const container = document.getElementById('vocabulary-cards');
+            container.innerHTML = '';
+
+            // 获取今天应该学习的组
+            const todayGroup = getTodaysGroup();
+            const todayData = vocabularyData.find(group => group.group === todayGroup) || vocabularyData[0];
+
+            const card = document.createElement('div');
+            card.className = `bg-white rounded-xl table-shadow p-6 card-hover ${todayData.mastered ? 'border-2 border-success' : 'border border-gray-100'}`;
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-lg font-bold text-gray-800">今日学习 - 第 ${todayData.group} 组</h3>
+                    <div class="flex space-x-2">
+                        <button class="toggle-visibility p-1 rounded-full hover:bg-gray-100 transition-colors" title="隐藏/显示中文释义">
+                            <i class="fa fa-eye-slash text-gray-500"></i>
+                        </button>
+                        <button class="mark-mastered p-1 rounded-full hover:bg-gray-100 transition-colors" title="标记是否掌握">
+                            ${todayData.mastered ? 
+                                '<i class="fa fa-check-circle text-success"></i>' : 
+                                '<i class="fa fa-circle-o text-gray-400"></i>'
+                            }
+                        </button>
+                    </div>
+                </div>
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="pb-2 font-semibold text-gray-700">原形</th>
+                            <th class="pb-2 font-semibold text-gray-700">过去式</th>
+                            <th class="pb-2 font-semibold text-gray-700">过去分词</th>
+                            <th class="pb-2 font-semibold text-gray-700 meaning-column">中文释义</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${todayData.words.map(word => `
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="py-2 text-gray-800">${word.base}</td>
+                                <td class="py-2 text-gray-800">${word.past}</td>
+                                <td class="py-2 text-gray-800">${word.participle}</td>
+                                <td class="py-2 text-gray-600 meaning-column">${word.meaning}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                <div class="mt-4 text-sm text-gray-500">
+                    <span class="font-medium">示例:</span> ${todayData.words[0].example}
+                </div>
+            `);
+
+            container.appendChild(card);
+
+            // 为卡片中的按钮添加事件监听器
+            const toggleBtn = card.querySelector('.toggle-visibility');
+            const markBtn = card.querySelector('.mark-mastered');
+            const meaningColumns = card.querySelectorAll('.meaning-column');
+
+            toggleBtn.addEventListener('click', () => {
+                meaningColumns.forEach(column => {
+                    column.classList.toggle('hidden');
+                });
+                const icon = toggleBtn.querySelector('i');
+                if (meaningColumns[0].classList.contains('hidden')) {
+                    icon.className = 'fa fa-eye text-gray-500';
+                } else {
+                    icon.className = 'fa fa-eye-slash text-gray-500';
+                }
+            });
+
+            markBtn.addEventListener('click', () => {
+                todayData.mastered = !todayData.mastered;
+                const icon = markBtn.querySelector('i');
+                if (todayData.mastered) {
+                    icon.className = 'fa fa-check-circle text-success';
+                    card.classList.add('border-2', 'border-success');
+                    card.classList.remove('border', 'border-gray-100');
+                } else {
+                    icon.className = 'fa fa-circle-o text-gray-400';
+                    card.classList.remove('border-2', 'border-success');
+                    card.classList.add('border', 'border-gray-100');
+                }
+                updateProgress();
+            });
+
+            updateProgress();
+        }
+
+        // 更新学习进度
+        function updateProgress() {
+            const masteredCount = vocabularyData.filter(group => group.mastered).length;
+            const totalCount = vocabularyData.length;
+            const progressPercentage = (masteredCount / totalCount) * 100;
+
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            document.getElementById('progress-text').textContent = `${masteredCount}/${totalCount} 组`;
+        }
+
+        // 导出为CSV文件
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            let csvContent = "组别,原形,过去式,过去分词,中文释义,示例\n";
+            
+            vocabularyData.forEach(group => {
+                group.words.forEach(word => {
+                    csvContent += `${group.group},"${word.base}","${word.past}","${word.participle}","${word.meaning}","${word.example}"\n`;
+                });
+            });
+
+            const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "英语动词AAA型变形表.csv");
+            document.body.appendChild(link);
+
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // 打印功能
+        document.getElementById('printBtn').addEventListener('click', () => {
+            window.print();
+        });
+
+        // 页面加载时渲染词汇卡片
+        document.addEventListener('DOMContentLoaded', renderVocabularyCards);
+    </script>
+</body>
+</html>    
